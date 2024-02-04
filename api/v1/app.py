@@ -8,9 +8,11 @@ from flask import jsonify
 from models import storage
 from flask_cors import CORS
 from api.v1.views import app_views
+from flask  import make_response
 import os
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 CORS(app, resources={r"/*": {"origin": '0.0.0.0'}})
 
 
@@ -21,7 +23,7 @@ with app.app_context():
 @app.errorhandler(404)
 def not_found(error):
     """Handles Not found error"""
-    return jsonify({'error': 'Not found'}), 404
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 @app.teardown_appcontext

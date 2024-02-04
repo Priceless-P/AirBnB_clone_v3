@@ -10,6 +10,7 @@ from flask import abort
 from flask import jsonify
 from markupsafe import escape
 from flask import request
+from flask import make_response
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
@@ -38,7 +39,7 @@ def get_create_cities(state_id):
 
         new_city = City(name=name, state_id=state.id)
         new_city.save()
-        return jsonify(new_city.to_dict()), 201
+        return make_response(jsonify(new_city.to_dict()), 201)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
@@ -52,7 +53,7 @@ def city(city_id):
     elif request.method == 'DELETE':
         storage.delete(city)
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
     elif request.method == 'PUT':
         data = request.get_json()
         if not data:
@@ -61,4 +62,4 @@ def city(city_id):
             if key not in ('id', 'created_at', 'updated_at'):
                 setattr(city, key, value)
         storage.save()
-        return jsonify(city.to_dict()), 200
+        return make_response(jsonify(city.to_dict()), 200)
