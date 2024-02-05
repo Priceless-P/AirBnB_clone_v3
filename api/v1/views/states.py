@@ -20,7 +20,7 @@ def get_states():
     for state in states.values():
         state_ = state.to_dict()
         all_states.append(state_)
-    return jsonify(all_states)
+    return make_response(jsonify(all_states))
 
 
 @app_views.route('/states', methods=['POST'])
@@ -44,7 +44,7 @@ def get_state(state_id):
     state = storage.get(State, escape(state_id))
     if state is None:
         abort(404)
-    return jsonify(state.to_dict())
+    return make_response(jsonify(state.to_dict()))
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
