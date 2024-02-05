@@ -12,7 +12,6 @@ from flask import make_response
 import os
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 CORS(app, resources={r"/*": {"origin": '0.0.0.0'}})
 
 
