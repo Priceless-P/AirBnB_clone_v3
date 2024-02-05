@@ -5,11 +5,11 @@
 from models.amenity import Amenity
 from api.v1.views import app_views
 from models.city import City
-from flask import jsonify
+from flask import jsonify, make_response
 from models.place import Place
+from models.review import Review
 from models.state import State
 from models import storage
-from models.review import Review
 from models.user import User
 
 
@@ -22,7 +22,7 @@ def status():
     return jsonify(response)
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def get_stats():
     """Retrieves the number of each objects by type"""
     classes = [Amenity, City, Place, Review, State, User]
@@ -30,4 +30,4 @@ def get_stats():
     stats = {}
     for i in range(len(classes)):
         stats[names[i]] = storage.count(classes[i])
-    return jsonify(stats)
+    return make_response(jsonify(stats))
