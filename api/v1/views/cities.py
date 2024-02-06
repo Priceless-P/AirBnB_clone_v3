@@ -12,7 +12,7 @@ from models.state import State
 from models import storage
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['GET'],
+@app_views.route("/states/<string:state_id>/cities", methods=["GET"],
                  strict_slashes=False)
 def get_cities_by_state(state_id):
     """Retrieves the list of all City objects of a State"""
@@ -23,7 +23,7 @@ def get_cities_by_state(state_id):
     return make_response(jsonify(all_cities))
 
 
-@app_views.route('/cities/<string:city_id>', methods=['GET'],
+@app_views.route("/cities/<string:city_id>", methods=["GET"],
                  strict_slashes=False)
 def get_city(city_id):
     """Retrieves a City object"""
@@ -33,7 +33,7 @@ def get_city(city_id):
     return make_response(jsonify(city.to_dict()))
 
 
-@app_views.route('/cities/<string:city_id>', methods=['DELETE'],
+@app_views.route("/cities/<string:city_id>", methods=["DELETE"],
                  strict_slashes=False)
 def delete_city(city_id):
     """Deletes a City object"""
@@ -45,7 +45,7 @@ def delete_city(city_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['POST'],
+@app_views.route("/states/<string:state_id>/cities", methods=["POST"],
                  strict_slashes=False)
 def create_city(state_id):
     """Creates a City"""
@@ -55,15 +55,15 @@ def create_city(state_id):
     data = request.get_json()
     if not data:
         abort(400, "Not a JSON")
-    if 'name' not in data:
+    if "name" not in data:
         abort(400, "Missing name")
 
-    new_city = City(name=data.get('name'), state_id=state.id)
+    new_city = City(name=data.get("name"), state_id=state.id)
     new_city.save()
     return make_response(jsonify(new_city.to_dict()), 201)
 
 
-@app_views.route('/cities/<string:city_id>', methods=['PUT'],
+@app_views.route("/cities/<string:city_id>", methods=["PUT"],
                  strict_slashes=False)
 def update_city(city_id):
     """Updates a City object"""
@@ -76,7 +76,7 @@ def update_city(city_id):
         abort(400, "Not a JSON")
 
     for key, value in data.items():
-        if key not in ('id', 'state_id', 'created_at', 'updated_at'):
+        if key not in ("id", "state_id", "created_at", "updated_at"):
             setattr(city, key, value)
     storage.save()
     return make_response(jsonify(city.to_dict()), 200)
