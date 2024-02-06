@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-""" Place_Amenities API
+"""
+Place_Amenities API
+- Create a new view for the link between Place objects and
+Amenity objects that handles all default RESTFul API actions
 """
 
 from flask import abort, jsonify, make_response
