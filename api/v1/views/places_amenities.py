@@ -1,8 +1,15 @@
 #!/usr/bin/python3
 """
 Place_Amenities API
-- Create a new view for the link between Place objects and
+Create a new view for the link between Place objects and
 Amenity objects that handles all default RESTFul API actions
+Endpoints:
+    - GET /places/<place_id>/amenities: Retrieves the list of amenities
+      associated with a place.
+    - DELETE /places/<place_id>/amenities/<amenity_id>: Deletes an amenity
+      from a place.
+    - POST /places/<place_id>/amenities/<amenity_id>: Links an amenity to
+      a place.
 """
 
 from flask import abort, jsonify, make_response
