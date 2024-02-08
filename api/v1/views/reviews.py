@@ -9,7 +9,8 @@ from models.user import User
 from models.place import Place
 
 
-@app_views.route('/places/<string:place_id>/reviews', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<string:place_id>/reviews', methods=['GET'],
+                 strict_slashes=False)
 def get_place_reviews(place_id):
     """Get reviews for a specified place."""
     place_obj = storage.get("Place", place_id)
@@ -19,7 +20,8 @@ def get_place_reviews(place_id):
     return jsonify(reviews_data)
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/reviews/<string:review_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_review_details(review_id):
     """Get review details for a specified review."""
     review_obj = storage.get("Review", review_id)
@@ -28,7 +30,8 @@ def get_review_details(review_id):
     return jsonify(review_obj.to_dict())
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/reviews/<string:review_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_review(review_id):
     """Delete a review based on its review_id."""
     review_obj = storage.get("Review", review_id)
@@ -39,7 +42,8 @@ def delete_review(review_id):
     return jsonify({})
 
 
-@app_views.route('/places/<string:place_id>/reviews', methods=['POST'], strict_slashes=False)
+@app_views.route('/places/<string:place_id>/reviews', methods=['POST'],
+                 strict_slashes=False)
 def create_review(place_id):
     """Create a new review."""
     place_obj = storage.get("Place", place_id)
@@ -61,7 +65,8 @@ def create_review(place_id):
     return make_response(jsonify(new_review.to_dict()), 201)
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/reviews/<string:review_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_review(review_id):
     """Update a review."""
     review_obj = storage.get("Review", review_id)
@@ -71,7 +76,8 @@ def update_review(review_id):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     data = request.get_json()
     for attr, value in data.items():
-        if attr not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+        if attr not in ['id', 'user_id', 'place_id',
+                        'created_at', 'updated_at']:
             setattr(review_obj, attr, value)
     review_obj.save()
     return jsonify(review_obj.to_dict())

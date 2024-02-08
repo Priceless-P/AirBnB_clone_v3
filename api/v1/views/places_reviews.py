@@ -52,7 +52,8 @@ def create_place_review(place_id):
     if place is None:
         abort(404)
     if not request.get_json():
-        return make_response(jsonify({'error': 'Data not in JSON format'}), 400)
+        return make_response(jsonify({'error': 'Data not in JSON format'}),
+                             400)
     kwargs = request.get_json()
     if 'user_id' not in kwargs:
         return make_response(jsonify({'error': 'User ID missing'}), 400)
@@ -69,13 +70,14 @@ def create_place_review(place_id):
 
 @app_views.route('/reviews/<string:review_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_review(review_id):
+def update_place_review(review_id):
     """Update an existing review"""
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
     if not request.get_json():
-        return make_response(jsonify({'error': 'Data not in JSON format'}), 400)
+        return make_response(jsonify({'error': 'Data not in JSON format'}),
+                             400)
     for attr, val in request.get_json().items():
         if attr not in ['id', 'user_id', 'place_id',
                         'created_at', 'updated_at']:

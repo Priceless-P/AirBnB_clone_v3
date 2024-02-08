@@ -42,7 +42,8 @@ def remove_amenity(amenity_id):
 def create_amenity():
     """Add a new amenity"""
     if not request.get_json():
-        return make_response(jsonify({'error': 'Data not in JSON format'}), 400)
+        return make_response(jsonify({'error': 'Data not in JSON format'}),
+                             400)
     if 'name' not in request.get_json():
         return make_response(jsonify({'error': 'Name field missing'}), 400)
     amty = Amt(**request.get_json())
@@ -58,7 +59,8 @@ def update_amenity(amenity_id):
     if amty is None:
         abort(404)
     if not request.get_json():
-        return make_response(jsonify({'error': 'Data not in JSON format'}), 400)
+        return make_response(jsonify({'error': 'Data not in JSON format'}),
+                             400)
     for attr, val in request.get_json().items():
         if attr not in ['id', 'created_at', 'updated_at']:
             setattr(amty, attr, val)
